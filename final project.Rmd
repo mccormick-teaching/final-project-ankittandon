@@ -1,0 +1,34 @@
+---
+title: "final project"
+author: "ankit tandon"
+date: "June 1, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+outcomes <- read.csv('outcomes.csv')
+```
+
+```{r}
+summary(lm(highqualitymeetinghours ~ highqualitymeetinghours_peer + highqualitymeetinghours_peer_prev + highqualitymeetinghours_prev, data = outcomes))
+summary(lm(lowengagementhours ~ lowengagementhours_peer + lowengagementhours_peer_prev + lowengagementhours_prev, data = outcomes))
+summary(lm(overload ~ overload_peer + overload_peer_prev + overload_prev, data = outcomes))
+```
+
+```{r}
+hist(outcomes$lowengagementhours, main = "Histograph of Low Engagement Hours", xlab = "Low Engagement Hours Per Week (hours)", cex.lab=1.5, cex.axis=1.5, cex.main=1.5, cex.sub=1.5)
+hist(outcomes$highqualitymeetinghours, main = "Histograph of High Quality Meeting Hours", xlab = "High Quality Meeting Hours Per Week (hours)", cex.lab=1.5, cex.axis=1.5, cex.main=1.5, cex.sub=1.5)
+hist(outcomes$overload, main = "Histograph of Overload", xlab = "Overloaded hours", cex.lab=1.5, cex.axis=1.5, cex.main=1.5, cex.sub=1.5)
+```
+
+```{r}
+outcome_withdummies <- fastDummies::dummy_cols(outcomes)
+```
+
+```{r}
+summary(lm(lowengagementhours ~ . , data = outcome_withdummies))
+```
